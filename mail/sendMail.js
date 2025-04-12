@@ -1,21 +1,15 @@
-const fs = require('fs');
-const path = require('path');
 const dotenv = require('dotenv');
 const { google } = require('googleapis');
 
 dotenv.config();
 
-
-// Load client secrets
-const CREDENTIALS_PATH = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-const TOKEN_PATH = JSON.parse(process.env.GOOGLE_TOKEN);
+const CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+const TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
 
 async function authorize() {
-  const content = fs.readFileSync(CREDENTIALS_PATH);
-  const credentials = JSON.parse(content);
-  const { client_secret, client_id, redirect_uris } = credentials.installed;
+  const { client_secret, client_id, redirect_uris } = CREDENTIALS.installed;
 
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -23,27 +17,15 @@ async function authorize() {
     redirect_uris[0]
   );
 
-  // Check for previously stored token
-  if (fs.existsSync(TOKEN_PATH)) {
-    const token = fs.readFileSync(TOKEN_PATH);
-    oAuth2Client.setCredentials(JSON.parse(token));
-    return oAuth2Client;
-  }
-
-  // Get new token if not stored
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
+  oAuth2Client.setCredentials(TOKEN); // directly use the token from env
+  return oAuth2Client;
 }
 
 function makeBody(to, subject, message) {
-  // Use the authenticated user's email here
-  const fromEmail = 'dishank_s@me.iir.ac.in';  // Replace with the actual authenticated email address
+  const fromEmail = 'dishank_s@me.iir.ac.in';
   const str = [
     `To: ${to}`,
-    `From: "Mood Match" <${fromEmail}>`, // Use the correct "From" email address
+    `From: "Mood Match" <${fromEmail}>`,
     `Subject: ${subject}`,
     '',
     message,
@@ -56,16 +38,14 @@ async function sendMail(email, subject, message) {
   const auth = await authorize();
   const gmail = google.gmail({ version: 'v1', auth });
 
-  const raw = makeBody(email, subject, message); // Call makeBody with correct parameters
+  const raw = makeBody(email, subject, message);
 
   const res = await gmail.users.messages.send({
-    userId: "me", // This will still use the authenticated user's email
-    requestBody: {
-      raw: raw,
-    },
+    userId: "me",
+    requestBody: { raw }
   });
 
-  console.log('Email sent!', res.data);
+  console.log('✅ Email sent!', res.data);
 }
 
 module.exports = sendMail;
