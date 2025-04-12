@@ -1,10 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
 const { google } = require('googleapis');
 
+dotenv.config();
+
 // Load client secrets
-const CREDENTIALS_PATH = 'credentials.json';
-const TOKEN_PATH = 'token.json';
+const CREDENTIALS_PATH = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+const TOKEN_PATH = JSON.parse(process.env.GOOGLE_TOKEN);
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
 
