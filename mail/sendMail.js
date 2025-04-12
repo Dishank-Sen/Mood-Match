@@ -3,31 +3,37 @@ const { google } = require('googleapis');
 
 dotenv.config();
 
+console.log('Environment variables check:');
+console.log('GOOGLE_CREDENTIALS exists:', !!process.env.GOOGLE_CREDENTIALS);
+console.log('GOOGLE_TOKEN exists:', !!process.env.GOOGLE_TOKEN);
+
 let CREDENTIALS, TOKEN;
 
 try {
-  // For credentials
-  if (process.env.GOOGLE_CREDENTIALS_B64) {
-    // Decode from Base64
-    const credentialsJson = Buffer.from(process.env.GOOGLE_CREDENTIALS_B64, 'base64').toString();
-    CREDENTIALS = JSON.parse(credentialsJson);
-  } else if (process.env.GOOGLE_CREDENTIALS) {
-    // Fallback to direct JSON parsing
-    CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-  } else {
-    throw new Error('Missing GOOGLE_CREDENTIALS');
+  if (!process.env.GOOGLE_CREDENTIALS) {
+    throw new Error('Missing GOOGLE_CREDENTIALS environment variable');
   }
   
-  // For token
-  if (process.env.GOOGLE_TOKEN_B64) {
-    // Decode from Base64
-    const tokenJson = Buffer.from(process.env.GOOGLE_TOKEN_B64, 'base64').toString();
-    TOKEN = JSON.parse(tokenJson);
-  } else if (process.env.GOOGLE_TOKEN) {
-    // Fallback to direct JSON parsing
+  if (!process.env.GOOGLE_TOKEN) {
+    throw new Error('Missing GOOGLE_TOKEN environment variable');
+  }
+  
+  try {
+    CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+    console.log('Successfully parsed GOOGLE_CREDENTIALS');
+  } catch (parseError) {
+    console.error('Failed to parse GOOGLE_CREDENTIALS:', parseError.message);
+    console.error('Raw value:', process.env.GOOGLE_CREDENTIALS.substring(0, 20) + '...');
+    throw new Error('Invalid GOOGLE_CREDENTIALS format');
+  }
+  
+  try {
     TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
-  } else {
-    throw new Error('Missing GOOGLE_TOKEN');
+    console.log('Successfully parsed GOOGLE_TOKEN');
+  } catch (parseError) {
+    console.error('Failed to parse GOOGLE_TOKEN:', parseError.message);
+    console.error('Raw value:', process.env.GOOGLE_TOKEN.substring(0, 20) + '...');
+    throw new Error('Invalid GOOGLE_TOKEN format');
   }
 } catch (error) {
   console.error('Error parsing credentials:', error.message);
