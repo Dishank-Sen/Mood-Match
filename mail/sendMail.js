@@ -7,8 +7,10 @@ dotenv.config();
 
 
 // Load client secrets
-const CREDENTIALS_PATH = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-const TOKEN_PATH = JSON.parse(process.env.GOOGLE_TOKEN);
+// const CREDENTIALS_PATH = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+// const TOKEN_PATH = JSON.parse(process.env.GOOGLE_TOKEN);
+const CREDENTIALS_PATH = process.env.GOOGLE_CREDENTIALS.json();
+const TOKEN_PATH = process.env.GOOGLE_TOKEN.json();
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
 
