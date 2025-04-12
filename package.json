@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:css": "npx tailwindcss -i ./public/css/style.css -o ./public/css/output.css --minify",
+    "build:css": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --minify",
     "build": "echo 'This build script does nothing.'",
     "postinstall": "npm run build:css"
   },
@@ -14,7 +14,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.3",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.7",
@@ -30,11 +29,11 @@
     "nodemailer": "^6.10.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
+    "tailwindcss": "^3.4.17",
     "validator": "^13.15.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^3.4.17"
+    "postcss": "^8.5.3"
   }
 }
