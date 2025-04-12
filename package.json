@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build:css": "npx tailwindcss -i ./public/css/style.css -o ./public/css/output.css --minify",
+    "build": "echo 'This build script does nothing.'",
+    "postinstall": "npm run build:css"
   },
   "keywords": [],
   "author": "",
