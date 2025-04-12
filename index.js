@@ -43,7 +43,7 @@ app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use("./uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 app.use(helmet({
   contentSecurityPolicy: process.env.NODE_CSP === 'production',
   crossOriginOpenerPolicy: process.env.NODE_CSP === 'production',
