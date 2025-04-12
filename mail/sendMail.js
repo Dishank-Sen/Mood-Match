@@ -3,8 +3,19 @@ const { google } = require('googleapis');
 
 dotenv.config();
 
-const CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-const TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
+let CREDENTIALS, TOKEN;
+
+try {
+  CREDENTIALS = process.env.GOOGLE_CREDENTIALS ? JSON.parse(process.env.GOOGLE_CREDENTIALS) : null;
+  TOKEN = process.env.GOOGLE_TOKEN ? JSON.parse(process.env.GOOGLE_TOKEN) : null;
+  
+  if (!CREDENTIALS || !TOKEN) {
+    throw new Error('Missing required environment variables');
+  }
+} catch (error) {
+  console.error('Error parsing credentials:', error.message);
+  process.exit(1); // Exit if we can't parse credentials
+}
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
 
