@@ -6,15 +6,32 @@ dotenv.config();
 let CREDENTIALS, TOKEN;
 
 try {
-  CREDENTIALS = process.env.GOOGLE_CREDENTIALS ? JSON.parse(process.env.GOOGLE_CREDENTIALS) : null;
-  TOKEN = process.env.GOOGLE_TOKEN ? JSON.parse(process.env.GOOGLE_TOKEN) : null;
+  // For credentials
+  if (process.env.GOOGLE_CREDENTIALS_B64) {
+    // Decode from Base64
+    const credentialsJson = Buffer.from(process.env.GOOGLE_CREDENTIALS_B64, 'base64').toString();
+    CREDENTIALS = JSON.parse(credentialsJson);
+  } else if (process.env.GOOGLE_CREDENTIALS) {
+    // Fallback to direct JSON parsing
+    CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+  } else {
+    throw new Error('Missing GOOGLE_CREDENTIALS');
+  }
   
-  if (!CREDENTIALS || !TOKEN) {
-    throw new Error('Missing required environment variables');
+  // For token
+  if (process.env.GOOGLE_TOKEN_B64) {
+    // Decode from Base64
+    const tokenJson = Buffer.from(process.env.GOOGLE_TOKEN_B64, 'base64').toString();
+    TOKEN = JSON.parse(tokenJson);
+  } else if (process.env.GOOGLE_TOKEN) {
+    // Fallback to direct JSON parsing
+    TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
+  } else {
+    throw new Error('Missing GOOGLE_TOKEN');
   }
 } catch (error) {
   console.error('Error parsing credentials:', error.message);
-  process.exit(1); // Exit if we can't parse credentials
+  process.exit(1);
 }
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
