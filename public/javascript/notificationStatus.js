@@ -1,5 +1,3 @@
-import { showAlert } from './alert.js';
-
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem("userId");
     const notificationIcon = document.getElementById('notificationIcon');
@@ -31,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const dateStr = formatDate(notification.createdAt);
             const timeStr = formatTime(notification.createdAt);
             const roomID = generateRoomID(userId,notification.senderId);
-            notificationE1.innerHTML = `<a href="/inbox?userId=${userId}"><div class="flex flex-col">
+            notificationE1.innerHTML = `<a href="https://mood-match-production-b16d.up.railway.app/inbox?userId=${userId}"><div class="flex flex-col">
                 <div class="flex items-center gap-2 justify-between w-full">
                   <p class="font-semibold text-slate-800 text-md">${notification.senderName}</p>
                   <span class="text-slate-500 text-sm whitespace-nowrap">sent you a message</span>

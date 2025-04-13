@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded' , () => {
                 const userIdA = localStorage.getItem("userId");
                 const userIdB = user.userId;
                 const roomID = `${userIdA}-${userIdB}`;
-                window.open(`/chat?roomID=${roomID}`);
+                window.open(`https://mood-match-production-b16d.up.railway.app/chat?roomID=${roomID}`);
             });
         });
     });

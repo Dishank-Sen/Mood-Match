@@ -84,13 +84,23 @@
     <div class="absolute right-72 top-28 hidden" id="notificationDropdown">
         <ul role="menu" id="notificationList" data-popover="profile-menu" data-popover-placement="bottom" class="hidden absolute z-10 overflow-auto rounded-lg border border-slate-200 bg-white p-2 shadow-lg w-fit max-h-96">
             <!-- here notification will be shown -->
+             <li class="cursor-pointer flex items-start gap-2 text-sm text-slate-800 rounded-md p-3 transition-all hover:bg-slate-100">
+                <a href="/inbox?userId=${userId}"><div class="flex flex-col">
+                    <div class="flex items-center gap-2 justify-between w-full">
+                      <p class="font-semibold text-slate-800 text-md">${notification.senderName}</p>
+                      <span class="text-slate-500 text-sm whitespace-nowrap">sent you a message</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-1">${dateStr} ${timeStr}</p>
+                  </div>
+                  </a>
+             </li>
         <hr>
       </ul>
     </div> 
   </nav>
 
         <div class="w-full mt-4 mb-20" id="chatBox">
-
+        <!-- chats will be displayed here -->
           <div class="fixed w-full bottom-0 px-4 py-3 bg-gray-800 border-t border-gray-700 flex items-center space-x-2">
             <button class="text-gray-400 hover:text-white">
               <!-- Link Icon -->
