@@ -34,9 +34,9 @@ dotenv.config();
 connect();
 
 // middlewares
-
+app.set('trust proxy', true);
 app.use(cors({
-  origin: 'http://10.81.80.17:3000', // Replace with your actual frontend origin if it's different
+  origin: 'https://mood-match-production-3bbf.up.railway.app', // Replace with your actual frontend origin if it's different
   credentials: true
 }));
 app.use(express.json({ limit: '20mb' }));
@@ -45,9 +45,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
 app.use(helmet({
-  contentSecurityPolicy: true?process.env.NODE_CSP === 'production',
-  crossOriginOpenerPolicy: true?process.env.NODE_CSP === 'production',
-  crossOriginEmbedderPolicy: true?process.env.NODE_CSP === 'production',
+  contentSecurityPolicy: true,
+  crossOriginOpenerPolicy: true,
+  crossOriginEmbedderPolicy: true,
 }));
 
 
