@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on('load-messages', (messages) => {
         messages.forEach(message => {
-            console.log(message)
             const dateStr = formatDate(message.timestamp);
             const timeStr = formatTime(message.timestamp);
 
@@ -99,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     socket.on('receive-message', (messages) => {
-        console.log("receive-message:", messages)
         const timeStr = formatTime(messages.timestamp);
         const dateStr = formatDate(messages.timestamp);
 
