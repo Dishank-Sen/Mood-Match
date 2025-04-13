@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
               dateHeader.classList.add('flex','items-center','justify-center');
               dateHeader.innerHTML = `<span class="text-center text-gray-200 bg-gray-700 rounded-lg w-fit px-2 py-1">${dateStr}</span>`;
               dateHeader.id = `date-${dateStr}`;
-              chatBox.appendChild(dateStr);
+              chatBox.appendChild(dateHeader);
           }
 
         if(messages.receiverId == userId){
