@@ -45,9 +45,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
 app.use(helmet({
-  contentSecurityPolicy: process.env.NODE_CSP === 'production',
-  crossOriginOpenerPolicy: process.env.NODE_CSP === 'production',
-  crossOriginEmbedderPolicy: process.env.NODE_CSP === 'production',
+  contentSecurityPolicy: true?process.env.NODE_CSP === 'production',
+  crossOriginOpenerPolicy: true?process.env.NODE_CSP === 'production',
+  crossOriginEmbedderPolicy: true?process.env.NODE_CSP === 'production',
 }));
 
 
