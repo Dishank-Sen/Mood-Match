@@ -21,6 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         body: JSON.stringify({ email, password }),
         credentials:'include'
       });
+      console.log(response);
       if (response.status == 201) {
         const data = await response.json();
         showAlert(data.message,'success');
@@ -33,25 +34,25 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const errorData = await response.json();
         showAlert(errorData.message,'fail'); 
         await new Promise(resolve => setTimeout(resolve, 2000));
-        window.location.reload();
+        // window.location.reload();
       }else if(response.status == 500){
         const errorData = await response.json();
         showAlert(errorData.message,'error'); 
         await new Promise(resolve => setTimeout(resolve, 2000));
-        window.location.reload();
+        // window.location.reload();
       }else if(response.status == 429){
         const errorData = await response.json();
         showAlert(errorData.message,'error'); 
         await new Promise(resolve => setTimeout(resolve, 2000));
-        window.location.reload();
+        // window.location.reload();
       }else{
         showAlert("Unexpected error",'error'); 
         await new Promise(resolve => setTimeout(resolve, 2000));
-        window.location.reload();
+        // window.location.reload();
       }
     }catch(error){
       showAlert('An error occurred: ' + error.message,'error');
       await new Promise(resolve => setTimeout(resolve, 2000));
-      window.location.reload(); 
+      // window.location.reload(); 
     }
   });
