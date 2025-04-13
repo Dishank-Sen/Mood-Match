@@ -13,8 +13,24 @@ fs.readFile('credentials.json', (err, content) => {
 });
 
 function authorize(credentials) {
-  const { client_secret, client_id, redirect_uris } = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+  // Check if we have web or installed credentials
+  const config = credentials.web || credentials.installed;
+  
+  if (!config) {
+    console.error('❌ Invalid credentials format - missing both web and installed properties');
+    return;
+  }
+  
+  const { client_secret, client_id, redirect_uris } = config;
+  
+  // Make sure to use the appropriate redirect URI from your credentials
+  const redirectUri = redirect_uris[0]; // This should match exactly what's in the Google Console
+  
+  const oAuth2Client = new google.auth.OAuth2(
+    client_id,
+    client_secret,
+    redirectUri
+  );
 
   // Check if we already have a token
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -27,6 +43,7 @@ function authorize(credentials) {
 function getNewToken(oAuth2Client) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
+    prompt: 'consent', // Force prompt to ensure you get a refresh token
     scope: SCOPES,
   });
   console.log('🔑 Authorize this app by visiting this url:\n', authUrl);
@@ -38,8 +55,11 @@ function getNewToken(oAuth2Client) {
 
   rl.question('\nPaste the code from the browser here: ', (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('❌ Error retrieving access token', err);
+    oAuth2Client.getToken(code.trim(), (err, token) => { // Trim the code to remove any whitespace
+      if (err) {
+        console.error('❌ Error retrieving access token', err);
+        return;
+      }
       oAuth2Client.setCredentials(token);
       fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
         if (err) return console.error('❌ Error saving token', err);

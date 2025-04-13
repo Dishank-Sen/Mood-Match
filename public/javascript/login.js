@@ -35,26 +35,26 @@ document.addEventListener('DOMContentLoaded', async () => {
           const errorData = await response.json();
           showAlert(errorData.message,'fail'); 
           await new Promise(resolve => setTimeout(resolve, 2000));
-          // window.location.reload();
+          window.location.reload();
         }else if(response.status == 500){
           const errorData = await response.json();
           showAlert(errorData.message,'error'); 
           await new Promise(resolve => setTimeout(resolve, 2000));
-          // window.location.reload();
+          window.location.reload();
         }else if(response.status == 429){
           const errorData = await response.json();
           showAlert(errorData.message,'error'); 
           await new Promise(resolve => setTimeout(resolve, 2000));
-          // window.location.reload();
+          window.location.reload();
         }else{
           showAlert("Unexpected error",'error'); 
           await new Promise(resolve => setTimeout(resolve, 2000));
-          // window.location.reload();
+          window.location.reload();
         }
       }catch(error){
         showAlert('An error occurred: ' + error.message,'error');
         await new Promise(resolve => setTimeout(resolve, 2000));
-        // window.location.reload(); 
+        window.location.reload(); 
       }
     });
 })

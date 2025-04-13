@@ -6,3 +6,6 @@ node_modules/
 
 credentials.json
 token.json
+mail/b64.js
+credentialsWeb.json
+token1.json

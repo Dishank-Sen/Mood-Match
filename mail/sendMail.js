@@ -73,7 +73,7 @@ try {
 const SCOPES = ['https://www.googleapis.com/auth/gmail.send'];
 
 async function authorize() {
-  const { client_secret, client_id, redirect_uris } = CREDENTIALS.installed;
+  const { client_secret, client_id, redirect_uris } = CREDENTIALS.web || CREDENTIALS.installed;
 
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
