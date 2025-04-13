@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/editProfile', {
+            const response = await fetch('https://mood-match-production-b16d.up.railway.app/api/editProfile', {
                 method: 'POST',
                 body: formData,
                 credentials:'include'
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const data = await response.json();
                 showAlert(data.message,'success');
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                window.location.replace('https://mood-match-production-3bbf.up.railway.app/login');
+                window.location.replace('https://mood-match-production-b16d.up.railway.app/login');
               } else if(response.status == 404) {
                 const errorData = await response.json();
                 showAlert(errorData.message,'fail'); 

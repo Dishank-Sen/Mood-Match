@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const userId = localStorage.getItem('userId');
   getStartedBtn.addEventListener('click', async () => {
     try{
-        window.location.href = `https://mood-match-production-3bbf.up.railway.app/moodSelector?userId=${userId}`;
+        window.location.href = `https://mood-match-production-b16d.up.railway.app/moodSelector?userId=${userId}`;
         getStartedBtn.disabled = true;
   
-        const response = await fetch('https://mood-match-production-3bbf.up.railway.app/moodSelector', {
+        const response = await fetch('https://mood-match-production-b16d.up.railway.app/moodSelector', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

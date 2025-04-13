@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
       const message = document.getElementById('message').value;
 
         try {
-          const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/feedback', {
+          const response = await fetch('https://mood-match-production-b16d.up.railway.app/api/feedback', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

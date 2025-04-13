@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
           submitBtn.classList.add('cursor-not-allowed');
           btnText.style.display = 'none';
           loading.style.display = 'block';
-          const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/signup', {
+          const response = await fetch('https://mood-match-production-b16d.up.railway.app/api/signup', {
             method: 'POST',
             body: formData,
             credentials:'include'
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
               verifyBtnText.style.display = 'none';
               verifyLoading.style.display = 'block';
               try {
-                const res = await fetch('https://mood-match-production-3bbf.up.railway.app/api/verify-otp', {
+                const res = await fetch('https://mood-match-production-b16d.up.railway.app/api/verify-otp', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
                   const data = await res.json();
                   showAlert(data.message,'success');
                   await new Promise(resolve => setTimeout(resolve, 2000));
-                  window.location.href = "https://mood-match-production-3bbf.up.railway.app/login";
+                  window.location.href = "https://mood-match-production-b16d.up.railway.app/login";
                 }else if(res.status == 401){
                   const errorData = await response.json();
                   showAlert(errorData.message,'fail'); 
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', async () =>{
       resendOTP.addEventListener('click', async () => {
 
         try {
-          const res = await fetch('https://mood-match-production-3bbf.up.railway.app/api/resend-otp', {
+          const res = await fetch('https://mood-match-production-b16d.up.railway.app/api/resend-otp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

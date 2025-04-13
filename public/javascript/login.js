@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         submitBtn.classList.add('cursor-not-allowed');
         btnText.style.display = 'none';
         loading.style.display = 'block';
-        const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/login', {
+        const response = await fetch('https://mood-match-production-b16d.up.railway.app/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           localStorage.setItem('userId', userId);
           localStorage.setItem('profileImg', data.profileImgUrl);
           await new Promise(resolve => setTimeout(resolve, 1000));
-          window.location.replace('https://mood-match-production-3bbf.up.railway.app/');
+          window.location.replace('https://mood-match-production-b16d.up.railway.app/');
         }else if(response.status == 401){
           const errorData = await response.json();
           showAlert(errorData.message,'fail'); 

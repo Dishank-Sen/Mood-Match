@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // fetch users data
       async function getUsers(userId){
         try {
-            const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/inbox', {
+            const response = await fetch('https://mood-match-production-b16d.up.railway.app/api/inbox', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

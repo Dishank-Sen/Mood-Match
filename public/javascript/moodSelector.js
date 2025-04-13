@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
           const selectedMood = button.id;
           console.log('Mood saved:', selectedMood);
-          window.location.href = `https://mood-match-production-3bbf.up.railway.app/currentMood?mood=${encodeURIComponent(selectedMood)}&userId=${userId}`;
+          window.location.href = `https://mood-match-production-b16d.up.railway.app/currentMood?mood=${encodeURIComponent(selectedMood)}&userId=${userId}`;
         });
       });       
 });

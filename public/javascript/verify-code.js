@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             verifyBtn.classList.add('cursor-not-allowed');
             btnText.style.display = 'none';
             loading.style.display = 'block';
-            const res = await fetch("https://mood-match-production-3bbf.up.railway.app/api/verify-code", {
+            const res = await fetch("https://mood-match-production-b16d.up.railway.app/api/verify-code", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email, code }),
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const data = await res.json();
                 showAlert(data.message,'success');
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                  window.location.replace('https://mood-match-production-3bbf.up.railway.app/reset-password');
+                  window.location.replace('https://mood-match-production-b16d.up.railway.app/reset-password');
             }else if(res.status == 401){
                 const data = await res.json();
                 showAlert(data.message, 'fail');
