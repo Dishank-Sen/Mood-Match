@@ -24,6 +24,7 @@ const io = new Server(server);
 const validator = require('validator');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
+app.set('trust proxy', true);
 const rateLimit = require('express-rate-limit');
 const deleteFile = require('./cloudinary/deleteFile');
 const verificationCode = require('./models/verificationCode');
@@ -34,7 +35,7 @@ dotenv.config();
 connect();
 
 // middlewares
-app.set('trust proxy', true);
+console.log('Trust proxy setting:', app.get('trust proxy'));
 app.use(cors({
   origin: 'https://mood-match-production-3bbf.up.railway.app', // Replace with your actual frontend origin if it's different
   credentials: true
