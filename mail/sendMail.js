@@ -3,7 +3,6 @@ const { google } = require('googleapis');
 
 dotenv.config();
 
-// Debug information
 console.log('Environment variables check:');
 console.log('GOOGLE_CREDENTIALS exists:', !!process.env.GOOGLE_CREDENTIALS);
 console.log('GOOGLE_TOKEN exists:', !!process.env.GOOGLE_TOKEN);
@@ -11,51 +10,63 @@ console.log('GOOGLE_TOKEN exists:', !!process.env.GOOGLE_TOKEN);
 let CREDENTIALS, TOKEN;
 
 try {
-  if (!process.env.GOOGLE_CREDENTIALS) {
-    throw new Error('Missing GOOGLE_CREDENTIALS environment variable');
+  if (!process.env.GOOGLE_CREDENTIALS || !process.env.GOOGLE_TOKEN) {
+    throw new Error('Missing required environment variables');
   }
   
-  if (!process.env.GOOGLE_TOKEN) {
-    throw new Error('Missing GOOGLE_TOKEN environment variable');
-  }
-  
+  // For GOOGLE_CREDENTIALS
   try {
-    // Check if the value appears to be Base64 (starts with "eyJ")
-    if (process.env.GOOGLE_CREDENTIALS.startsWith('eyJ')) {
-      // Decode from Base64
-      const credentialsJson = Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString();
-      CREDENTIALS = JSON.parse(credentialsJson);
-      console.log('Successfully decoded and parsed Base64 GOOGLE_CREDENTIALS');
-    } else {
-      // Regular JSON parsing
-      CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-      console.log('Successfully parsed GOOGLE_CREDENTIALS');
+    const rawCredentials = process.env.GOOGLE_CREDENTIALS;
+    console.log('CREDENTIALS starts with:', rawCredentials.substring(0, 10));
+    
+    // Try decoding from Base64
+    try {
+      const decoded = Buffer.from(rawCredentials, 'base64').toString('utf8');
+      console.log('Decoded CREDENTIALS preview:', decoded.substring(0, 30));
+      
+      try {
+        CREDENTIALS = JSON.parse(decoded);
+        console.log('Successfully decoded and parsed Base64 GOOGLE_CREDENTIALS');
+      } catch (jsonError) {
+        console.error('Failed to parse decoded credentials as JSON:', jsonError.message);
+        throw new Error('Invalid decoded JSON format');
+      }
+    } catch (decodeError) {
+      console.error('Failed to decode Base64 credentials:', decodeError.message);
+      throw new Error('Failed Base64 decoding'); 
     }
-  } catch (parseError) {
-    console.error('Failed to parse GOOGLE_CREDENTIALS:', parseError.message);
-    console.error('Raw value:', process.env.GOOGLE_CREDENTIALS.substring(0, 20) + '...');
-    throw new Error('Invalid GOOGLE_CREDENTIALS format');
+  } catch (credError) {
+    console.error('Credentials processing error:', credError.message);
+    throw new Error('Credentials processing failed');
   }
   
+  // For GOOGLE_TOKEN
   try {
-    // Check if the value appears to be Base64 (starts with "eyJ")
-    if (process.env.GOOGLE_TOKEN.startsWith('eyJ')) {
-      // Decode from Base64
-      const tokenJson = Buffer.from(process.env.GOOGLE_TOKEN, 'base64').toString();
-      TOKEN = JSON.parse(tokenJson);
-      console.log('Successfully decoded and parsed Base64 GOOGLE_TOKEN');
-    } else {
-      // Regular JSON parsing
-      TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
-      console.log('Successfully parsed GOOGLE_TOKEN');
+    const rawToken = process.env.GOOGLE_TOKEN;
+    console.log('TOKEN starts with:', rawToken.substring(0, 10));
+    
+    // Try decoding from Base64
+    try {
+      const decoded = Buffer.from(rawToken, 'base64').toString('utf8');
+      console.log('Decoded TOKEN preview:', decoded.substring(0, 30));
+      
+      try {
+        TOKEN = JSON.parse(decoded);
+        console.log('Successfully decoded and parsed Base64 GOOGLE_TOKEN');
+      } catch (jsonError) {
+        console.error('Failed to parse decoded token as JSON:', jsonError.message);
+        throw new Error('Invalid decoded JSON format');
+      }
+    } catch (decodeError) {
+      console.error('Failed to decode Base64 token:', decodeError.message);
+      throw new Error('Failed Base64 decoding');
     }
-  } catch (parseError) {
-    console.error('Failed to parse GOOGLE_TOKEN:', parseError.message);
-    console.error('Raw value:', process.env.GOOGLE_TOKEN.substring(0, 20) + '...');
-    throw new Error('Invalid GOOGLE_TOKEN format');
+  } catch (tokenError) {
+    console.error('Token processing error:', tokenError.message);
+    throw new Error('Token processing failed');
   }
 } catch (error) {
-  console.error('Error parsing credentials:', error.message);
+  console.error('Error setting up credentials:', error.message);
   process.exit(1);
 }
 
