@@ -429,8 +429,12 @@ app.post('/api/signup', upload.single('file'),async (req, res) => {
       await newUser.save();
       return res.status(201).json({ message: `Mail sent to ${email}`, email:email });
     }else{
-      const localFilePath = path.join(__dirname,'./public/assets','profile.svg');
-      const secure_url = await uploadFile(localFilePath,{
+      const localFilePath = path.join(__dirname,'/public/assets','profile.svg');
+      const fileName = Date.now() + '.svg';
+      const destPath = path.join(__dirname, '/uploads', fileName);
+      fs.copyFileSync(localFilePath, destPath);
+      
+      const secure_url = await uploadFile(destPath,{
         resource_type: "image",
         folder: "moodMatchImages",
         use_filename: true,
