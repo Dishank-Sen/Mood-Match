@@ -45,12 +45,22 @@ app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
-app.use(helmet({
-  contentSecurityPolicy: true,
-  crossOriginOpenerPolicy: true,
-  crossOriginEmbedderPolicy: true,
-}));
-
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+        // Add other needed directives
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        connectSrc: ["'self'"],
+      },
+    },
+    crossOriginOpenerPolicy: true,
+    crossOriginEmbedderPolicy: true,
+  })
+);
 
 // rate limit
 
