@@ -3,6 +3,7 @@ const { google } = require('googleapis');
 
 dotenv.config();
 
+// Debug information
 console.log('Environment variables check:');
 console.log('GOOGLE_CREDENTIALS exists:', !!process.env.GOOGLE_CREDENTIALS);
 console.log('GOOGLE_TOKEN exists:', !!process.env.GOOGLE_TOKEN);
@@ -19,8 +20,17 @@ try {
   }
   
   try {
-    CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-    console.log('Successfully parsed GOOGLE_CREDENTIALS');
+    // Check if the value appears to be Base64 (starts with "eyJ")
+    if (process.env.GOOGLE_CREDENTIALS.startsWith('eyJ')) {
+      // Decode from Base64
+      const credentialsJson = Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString();
+      CREDENTIALS = JSON.parse(credentialsJson);
+      console.log('Successfully decoded and parsed Base64 GOOGLE_CREDENTIALS');
+    } else {
+      // Regular JSON parsing
+      CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+      console.log('Successfully parsed GOOGLE_CREDENTIALS');
+    }
   } catch (parseError) {
     console.error('Failed to parse GOOGLE_CREDENTIALS:', parseError.message);
     console.error('Raw value:', process.env.GOOGLE_CREDENTIALS.substring(0, 20) + '...');
@@ -28,8 +38,17 @@ try {
   }
   
   try {
-    TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
-    console.log('Successfully parsed GOOGLE_TOKEN');
+    // Check if the value appears to be Base64 (starts with "eyJ")
+    if (process.env.GOOGLE_TOKEN.startsWith('eyJ')) {
+      // Decode from Base64
+      const tokenJson = Buffer.from(process.env.GOOGLE_TOKEN, 'base64').toString();
+      TOKEN = JSON.parse(tokenJson);
+      console.log('Successfully decoded and parsed Base64 GOOGLE_TOKEN');
+    } else {
+      // Regular JSON parsing
+      TOKEN = JSON.parse(process.env.GOOGLE_TOKEN);
+      console.log('Successfully parsed GOOGLE_TOKEN');
+    }
   } catch (parseError) {
     console.error('Failed to parse GOOGLE_TOKEN:', parseError.message);
     console.error('Raw value:', process.env.GOOGLE_TOKEN.substring(0, 20) + '...');
