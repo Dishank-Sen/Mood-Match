@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded' , () => {
                     <img class="aspect-square w-10 rounded-full cursor-pointer" src="${user.profileImg}" alt="profile">
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                    <p class="text-sm font-medium text-white">
                         ${user.displayName}
                     </p>
                 </div>
-                <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                    <button type="button" id="chat-${user.userId}" class="text-white bg-indigo-700 hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">Chat</button>   
+                <div class="inline-flex items-center text-base font-semibold text-white">
+                    <button type="button" id="chat-${user.userId}" class="text-white focus:outline-none focus:ring-4  font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 cursor-pointer">Chat</button>   
                 </div>
             </div>`;
             userList.appendChild(userEl);
