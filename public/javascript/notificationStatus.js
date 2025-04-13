@@ -56,12 +56,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch('/api/notificationStatus', {
+        const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/notificationStatus', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId })
+            body: JSON.stringify({ userId }),
+            credentials:'include'
           });
 
           if(response.ok){

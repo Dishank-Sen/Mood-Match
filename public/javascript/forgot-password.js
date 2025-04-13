@@ -11,17 +11,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             nextBtn.classList.add('cursor-not-allowed');
             btnText.style.display = 'none';
             loading.style.display = 'block';
-            const res = await fetch("/api/forgot-password", {
+            const res = await fetch("https://mood-match-production-3bbf.up.railway.app/api/forgot-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
+                credentials:'include'
               });
 
               if(res.status == 201){
                   const data = await res.json();
                   showAlert(data.message,'success');
                   await new Promise(resolve => setTimeout(resolve, 1000));
-                  window.location.replace('/verify-code');
+                  window.location.replace('https://mood-match-production-3bbf.up.railway.app/verify-code');
               }else if(res.status == 401){
                 const data = await res.json();
                 showAlert(data.message, 'fail');
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const data = await res.json();
                 showAlert(data.message, 'error');
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                // window.location.reload();
+                window.location.reload();
               }else{
                 showAlert('Unexpected Error','error');
                 await new Promise(resolve => setTimeout(resolve, 1000));

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async (e) => {
         if(!userId){
            
         }else{
-            const response = await fetch('/api/verify', {
+            const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/verify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

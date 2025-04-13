@@ -13,17 +13,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             resetBtn.classList.add('cursor-not-allowed');
             btnText.style.display = 'none';
             loading.style.display = 'block';
-            const res = await fetch("/api/reset-password", {
+            const res = await fetch("https://mood-match-production-3bbf.up.railway.app/api/reset-password", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email, code, newPassword }),
+              credentials:'include'
             });
           
             if(res.status == 201){
                 const data = await res.json();
                 showAlert(data.message,'success');
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                window.location.replace('/login');
+                window.location.replace('https://mood-match-production-3bbf.up.railway.app/login');
             }else if(res.status == 401){
                 const data = await res.json();
                 showAlert(data.message, 'fail');

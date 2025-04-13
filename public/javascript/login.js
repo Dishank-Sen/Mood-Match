@@ -13,12 +13,13 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       submitBtn.classList.add('cursor-not-allowed');
       btnText.style.display = 'none';
       loading.style.display = 'block';
-      const response = await fetch('/api/login', {
+      const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
+        credentials:'include'
       });
       if (response.status == 201) {
         const data = await response.json();
@@ -27,7 +28,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         localStorage.setItem('userId', userId);
         localStorage.setItem('profileImg', data.profileImgUrl);
         await new Promise(resolve => setTimeout(resolve, 1000));
-        window.location.replace('/');
+        window.location.replace('https://mood-match-production-3bbf.up.railway.app/');
       }else if(response.status == 401){
         const errorData = await response.json();
         showAlert(errorData.message,'fail'); 

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('userId');
     async function getData(userId){
         try { 
-            const response = await fetch('/api/profile', {
+            const response = await fetch('https://mood-match-production-3bbf.up.railway.app/api/profile', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
