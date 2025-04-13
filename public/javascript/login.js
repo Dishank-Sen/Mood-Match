@@ -1,6 +1,5 @@
 import { showAlert } from './alert.js';
 document.addEventListener('DOMContentLoaded', async () => {
-  showAlert('test','success');
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault(); // Prevent the default form submission
       const email = document.getElementById('email').value;
