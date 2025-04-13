@@ -37,7 +37,7 @@ connect();
 // middlewares
 console.log('Trust proxy setting:', app.get('trust proxy'));
 app.use(cors({
-  origin: 'https://mood-match-production-3bbf.up.railway.app', // Replace with your actual frontend origin if it's different
+  origin: 'https://mood-match-production-b16d.up.railway.app', // Replace with your actual frontend origin if it's different
   credentials: true
 }));
 app.use(express.json({ limit: '20mb' }));
@@ -51,14 +51,12 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
-        // Add other needed directives
-        scriptSrc: ["'self'", "'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        connectSrc: ["'self'"],
+        // Other directives as needed
       },
     },
+    // Disable COEP to allow cross-origin resources
+    crossOriginEmbedderPolicy: false,
     crossOriginOpenerPolicy: true,
-    crossOriginEmbedderPolicy: true,
   })
 );
 
