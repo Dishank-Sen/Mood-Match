@@ -366,13 +366,17 @@ app.post('/api/signup', upload.single('file'),async (req, res) => {
     // checking the domain
     const domain = ".iitr.ac.in";
     if(!email.includes(domain)){
-      const filePath = req.file.path;
-      fs.unlinkSync(filePath);
+      if(req.file){
+        const filePath = req.file.path;
+        fs.unlinkSync(filePath);
+      }
       return res.status(401).json({ message: 'Invalid Email Domain !' });
     }
     if (password.length < 6) {
-      const filePath = req.file.path;
-      fs.unlinkSync(filePath);
+      if(req.file){
+        const filePath = req.file.path;
+        fs.unlinkSync(filePath);
+      }
       return res.status(401).json({ message: 'Password must be at least 6 characters!' });
     }
 
@@ -381,8 +385,10 @@ app.post('/api/signup', upload.single('file'),async (req, res) => {
     const existingTempUser = await tempUser.findOne({ "email":email });
     const existingOtp = await otpModel.findOne({"email":email});
     if (existingUser) {
-      const filePath = req.file.path;
-      fs.unlinkSync(filePath);
+      if(req.file){
+        const filePath = req.file.path;
+        fs.unlinkSync(filePath);
+      }
       return res.status(401).json({ message: 'Email already in use' });
     }
     
@@ -467,6 +473,10 @@ app.post('/api/signup', upload.single('file'),async (req, res) => {
     }
     if(existingUser){
       await existingUser.deleteOne();
+    }
+    if(req.file){
+      const filePath = req.file.path;
+      fs.unlinkSync(filePath);
     }
     return res.status(500).json({ message: 'Server error' });
   }
